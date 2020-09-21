@@ -1,0 +1,6 @@
+# For simplicity, only the required resource section is defined
+
+Resources:
+  # This logical resource creates an AWS S3 bucket physical resource
+  CuteAnimals: # This is just the name for the logical resource, not the physical resource!
+    Type: AWS::S3::Bucket

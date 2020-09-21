@@ -1,0 +1,12 @@
+Parameters:
+  FirstName:
+    Type: String
+    Description: Your first name! It should be lowercase (S3 does not support uppercase bucket names).
+
+Resources:
+  CuteAnimals:
+    Type: AWS::S3::Bucket
+    # Even more properties can be found in the Cloudformation S3 documentation
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html
+    Properties:
+      BucketName: !Join ['-', [!Ref FirstName, 'cute-animals']]

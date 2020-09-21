@@ -1,0 +1,21 @@
+Parameters:
+  FirstName:
+    Type: String
+    Description: Your first name!
+
+Outputs:
+  EatsBucketName:
+    Value:
+      Ref: Eeeeeats
+  EatsBucketARN:
+    Description: The Amazon Resource Name (ARN) for the Eats bucket. This identifier may be inputted into other AWS services!
+    Value:
+      Fn::GetAtt: Eeeeeats.Arn
+
+Resources:
+  CuteAnimals:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join ['-', [!Ref FirstName, 'cute-animals']]
+  Eeeeeats:
+    Type: AWS::S3::Bucket

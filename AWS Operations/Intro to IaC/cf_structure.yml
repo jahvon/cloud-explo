@@ -1,0 +1,44 @@
+---
+# [Optional] Cloudformation template format version. Allows AWS to know which version of the template you are using.
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
+AWSTemplateFormatVersion: "2010-09-09"
+
+# [Optional] This is the description for the template. MUST come right after the AWSTemplateFormatVerion if used.
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-description-structure.html
+Description:
+  this template does XXXX
+
+# [Optional] Multipurpose section; can be used to provide information for all template resources, specify Cloudformation interface layout, etc.
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/metadata-section-structure.html
+Metadata:
+  template metadata
+
+# [Optional] Enables you to input custom values to the template each time you create or update a stack
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
+Parameters:
+  set of parameters
+
+# [Optional] Matches a key to a corresponding set of named values
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html
+Mappings:
+  set of mappings
+
+# [Optional] Contains statements that define the circumstances under which entities are created or configured
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html
+Conditions:
+  set of conditions
+
+# [Optional] Macros that CloudFormation uses to process the template. Usually used for serverless applications
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
+Transform:
+  set of transforms
+
+# [Required] AWS resources that you want to include in the stack
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
+Resources:
+  set of resources
+
+# [Optional] Output values that you can import into other stacks, return in response, or view in the CloudFormation console
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html
+Outputs:
+  set of outputs
