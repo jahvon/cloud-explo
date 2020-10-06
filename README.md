@@ -9,3 +9,9 @@
 - Cloudformation Functions Basics
 - Exercises (Creating, updating, and destroying stacks)
 
+### Introduction to IAM
+- What is Identity and Access Management (IAM)
+- What are IAM Users, Groups, Roles, and Policies
+- IAM Best Practices
+- Amazon Resource Names (ARNs)
+- Exercises (Creating user, groups, and policies)

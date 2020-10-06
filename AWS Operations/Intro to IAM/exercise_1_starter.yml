@@ -1,0 +1,10 @@
+Parameters:
+  FirstName:
+    Type: String
+    Description: Your first name! Reminder, it must be lowercased.
+
+Resources:
+  CuteAnimals:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join ['-', [!Ref FirstName, 'cute-animals']]

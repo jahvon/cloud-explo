@@ -1,0 +1,32 @@
+Parameters:
+  FirstName:
+    Type: String
+    Description: Your first name! Reminder, it must be lowercased.
+
+Resources:
+  CuteAnimals:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join ['-', [!Ref FirstName, 'cute-animals']]
+
+  CuteAnimalsGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Join ['-', [!Ref FirstName, 'group']]
+
+  CuteAnimalsPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: String
+      Groups:
+        - !Ref CuteAnimalsGroup
+      ManagedPolicyName: !Join ['-', [!Ref FirstName, 'policy']]
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - s3:GetObject
+          - s3:PutObject
+          Resource:
+            - !Sub "arn:aws:s3:::${FirstName}-cute-animals/*"
