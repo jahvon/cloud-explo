@@ -15,13 +15,12 @@ Resources:
       Code:
         ZipFile: |
           exports.handler = function(event, context) {
-            const num = Math.random();
-            console.log("Function Invoked!");
-            console.log(num);
+            const num = Math.random() * 100;
+            console.log("Function Invoked! Here is a random number: " + num);
             return;
           }
-  
-  # Creates the IAM role needed for the Lambda to have access to create 
+
+  # Creates the IAM role needed for the Lambda to have access to create
   # and write logs
   LambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -47,7 +46,7 @@ Resources:
               - logs:PutLogEvents
             Resource: arn:aws:logs:*:*:*
 
-  # Creates a EventBridge / CloudWatch Event that invokes the lambda function 
+  # Creates a EventBridge / CloudWatch Event that invokes the lambda function
   # every second
   LambdaSchedule:
     Type: AWS::Events::Rule
@@ -60,9 +59,18 @@ Resources:
           Arn: !GetAtt LambdaFunction.Arn
       State: ENABLED
 
+  # Provides permissions needed for the scheduled event to invoke the lambda
+  LambdaFunctionSchedulePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !GetAtt LambdaFunction.Arn
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt LambdaSchedule.Arn
+
   # Creates a CloudWatch dashboard that we will add metrics/logs to
   LambdaCloudWatchDashboard:
     Type: AWS::CloudWatch::Dashboard
-    Properties: 
+    Properties:
       DashboardName: !Join ['-', [!Ref FirstName, 'Function-Dashboard']]
       DashboardBody: '{"widgets":[{"type":"text","x":0,"y":0,"width":3,"height":3,"properties":{"markdown":"Welcome to your dashboard!"}}]}'
