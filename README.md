@@ -15,3 +15,16 @@
 - IAM Best Practices
 - Amazon Resource Names (ARNs)
 - Exercises (Creating user, groups, and policies)
+
+### Introduction to Monitoring
+- What is CloudWatch
+- High-level overview of Lambda
+- CloudWatch logs and metrics
+- CloudWatch dashboards
+- Using PaperTrail or Librato with CloudWatch
+- Exercises (Querying logs, visualizing metrics, and adding widgets to a dashboard)
+
+Cloudwatch logs
+Cloudwatch metrics
+Basics of logging in a lambda
+Logging to PaperTrail

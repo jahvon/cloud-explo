@@ -1,0 +1,68 @@
+Parameters:
+  FirstName:
+    Type: String
+    Description: Your first name!
+
+Resources:
+  # Creates a Lambda function that prints "Function Invoked!" and a random number.
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Join ['-', [!Ref FirstName, 'Function']]
+      Runtime: nodejs12.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: index.handler
+      Code:
+        ZipFile: |
+          exports.handler = function(event, context) {
+            const num = Math.random();
+            console.log("Function Invoked!");
+            console.log(num);
+            return;
+          }
+  
+  # Creates the IAM role needed for the Lambda to have access to create 
+  # and write logs
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Policies:
+      - PolicyName: LambdaLogging
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: arn:aws:logs:*:*:*
+
+  # Creates a EventBridge / CloudWatch Event that invokes the lambda function 
+  # every second
+  LambdaSchedule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Join ['-', [!Ref FirstName, 'Schedule']]
+      Description: Invokes the lambda function on a schedule
+      ScheduleExpression: rate(1 minute)
+      Targets:
+        - Id: !Join ['-', [!Ref FirstName, 'FunctionID']]
+          Arn: !GetAtt LambdaFunction.Arn
+      State: ENABLED
+
+  # Creates a CloudWatch dashboard that we will add metrics/logs to
+  LambdaCloudWatchDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties: 
+      DashboardName: !Join ['-', [!Ref FirstName, 'Function-Dashboard']]
+      DashboardBody: '{"widgets":[{"type":"text","x":0,"y":0,"width":3,"height":3,"properties":{"markdown":"Welcome to your dashboard!"}}]}'
